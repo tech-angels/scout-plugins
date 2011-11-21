@@ -54,11 +54,11 @@ class UrlMonitor < Scout::Plugin
         remember(:down_at => Time.now)
       else
         if memory(:was_up) && memory(:down_at)
-          alert( "The URL [#{url}] is responding again",
+          alert( "The URL #{url} is responding again",
                  "URL: #{url}\n\nStatus: #{response.class.to_s[/^Net::HTTP(.*)$/, 1]}. " +
                  "Was unresponsive for #{(Time.now - memory(:down_at)).to_i} seconds")
         else
-          alert( "The URL [#{url}] is responding",
+          alert( "The URL #{url} is responding",
                  "URL: #{url}\n\nStatus: #{response.class.to_s[/^Net::HTTP(.*)$/, 1]}. ")
         end
         memory.delete(:down_at)
@@ -67,7 +67,7 @@ class UrlMonitor < Scout::Plugin
 
     remember(:was_up => is_up)
   rescue Exception => e
-    error( "Error monitoring url [#{url}]",
+    error( "Error monitoring url: #{url}",
            "#{e.message}<br><br>#{e.backtrace.join('<br>')}" )
   end
 
